@@ -32,24 +32,6 @@ export default function App() {
     trackClick(service, placement);
   };
 
-  const downloadHtmlFile = async () => {
-    try {
-      const res = await fetch('/deploy.html');
-      const text = await res.text();
-      const blob = new Blob([text], { type: 'text/html;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'index.html';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    } catch {
-      window.location.href = '/deploy.html';
-    }
-  };
-
   return (
     <>
       <header>
@@ -173,7 +155,7 @@ export default function App() {
                   <li>Acompanhamento de custos e qualidade dos contatos.</li>
                   <li>Otimizações orientadas pelos dados.</li>
                 </ul>
-                <p className="note">O orçamento pago às plataformas é separado do valor da gestão.</p>
+                <p className="note">Gestão a partir de R$400 por mês. O orçamento pago às plataformas é separado do valor da gestão.</p>
                 <a 
                   className="btn" 
                   href={getWaLink("Olá! Tenho interesse em gestão de tráfego pago para meu negócio. Gostaria de entender como funciona o serviço.")}
@@ -360,26 +342,6 @@ export default function App() {
           <p style={{ margin: 0, fontSize: '13px', color: 'var(--muted)' }}>
             © {new Date().getFullYear()} Day One Digital. Todos os direitos reservados.
           </p>
-          <button
-            type="button"
-            onClick={downloadHtmlFile}
-            style={{
-              background: '#D9AD4B',
-              color: '#050505',
-              border: 'none',
-              padding: '10px 20px',
-              fontSize: '14px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              borderRadius: '2px',
-              transition: 'filter 0.2s'
-            }}
-          >
-            📥 Baixar index.html (Deploy)
-          </button>
         </div>
       </footer>
     </>
