@@ -32,6 +32,24 @@ export default function App() {
     trackClick(service, placement);
   };
 
+  const downloadHtmlFile = async () => {
+    try {
+      const res = await fetch('/deploy.html');
+      const text = await res.text();
+      const blob = new Blob([text], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'index.html';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch {
+      window.location.href = '/deploy.html';
+    }
+  };
+
   return (
     <>
       <header>
@@ -336,6 +354,32 @@ export default function App() {
           <div>
             <p>Contato oficial pelo WhatsApp, pelo botão desta página.</p>
           </div>
+        </div>
+
+        <div className="wrap" style={{ marginTop: '36px', paddingTop: '24px', borderTop: '1px solid var(--edge)', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '16px' }}>
+          <p style={{ margin: 0, fontSize: '13px', color: 'var(--muted)' }}>
+            © {new Date().getFullYear()} Day One Digital. Todos os direitos reservados.
+          </p>
+          <button
+            type="button"
+            onClick={downloadHtmlFile}
+            style={{
+              background: '#D9AD4B',
+              color: '#050505',
+              border: 'none',
+              padding: '10px 20px',
+              fontSize: '14px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              borderRadius: '2px',
+              transition: 'filter 0.2s'
+            }}
+          >
+            📥 Baixar index.html (Deploy)
+          </button>
         </div>
       </footer>
     </>
